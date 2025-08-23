@@ -18,4 +18,9 @@ class MyController extends Controller
     {
         return view('product.createView');
     }
+
+    public function ViewList()
+    {
+        return view('product.ListView');
+    }
 }
