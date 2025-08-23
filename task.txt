@@ -1,0 +1,56 @@
+Round 2: Technical Assignment
+ 
+Follow the instruction and design in the link and create the screens
+accordingly. Share the developed files along with migrations and seeders for evaluation. You can
+upload the files on Google Drive and share a link.
+
+Create a CRUD application that has the following features:
+
+The application's main features are the following:
+
+1. Create a new record
+2. Retrieve the list of records or a single record
+3. Update a record
+4. Delete a record
+
+ 
+Tables creation:
+
+1. Create all required tables through migration.
+2. Add four categories in the categories table through seeder.
+
+Edit/Create forms must have at least the following fields:
+
+1. text input for product name
+2. textarea for product description
+3. dropdown menu for category (this is a list fetched from the database.
+Just make an endpoint that returns an array, no need to have CRUD functionalities for the category).
+4. A toggle for active/inactive (actual data should be a boolean type).
+
+Retrieve list:
+1. List of all records including product id, product name, product description, category name, and product status (active/inactive) (no need to paginate) 
+2. User can set a filter to only show active or inactive records
+3. Can search a record by its name to filter results
+
+Delete record:
+1. Can be done when viewing a single record 
+2. Bulk delete can be done from the list of records
+
+
+Use the following tech stack
+
+1. HTML, PHP Laravel framework, jQuery, ajax.
+2. Any other library that you might want to include.
+
+
+Design
+
+1. Make the application look as presentable, but do not stress too much
+about the designs
+2. Mobile responsive. If your list is too wide, then have a horizontal
+scroll for it.
+
+Other requirements
+
+1. Show a toast message whenever a record is modified.
+2. Show loading state when retrieving data.
