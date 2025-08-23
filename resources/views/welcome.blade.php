@@ -82,7 +82,7 @@
 <body>
     <div class="container">
         <h1>
-            <a href="" style="text-decoration:none">
+            <a href="{{route('ADMdashboard')}}" style="text-decoration:none">
                 <span class="disco-text">
                     Mypcot Infotech Pvt Ltd
                 </span>
