@@ -22,29 +22,21 @@ class MyController extends Controller
     {
         return view('product.createView');
     }
-
-public function viewList(Request $request)
-{
-    if ($request->ajax()) {
-        $data = DB::table('products')->select('*');
-
-        return DataTables::of($data)
-            ->addColumn('status', function ($row) {
-                return $row->status == 1
-                    ? '<span class="badge bg-success">Active</span>'
-                    : '<span class="badge bg-danger">Inactive</span>';
-            })
-            ->addColumn('action', function ($row) {
-                $editBtn = '<a href="'.route('edit.product', $row->id).'" class="btn btn-sm btn-primary">Edit</a>';
-                $deleteBtn = '<button type="button" data-id="'.$row->id.'" class="btn btn-sm btn-danger deleteBtn">Delete</button>';
-                return $editBtn . ' ' . $deleteBtn;
-            })
-            ->rawColumns(['status', 'action']) // allow HTML
-            ->make(true);
+    public function viewList(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('products')->orderBy('created_at', 'desc')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('product.ListView');
     }
-
-    return view('product.ListView');
-}
 
 
     public function submitProduct(Request $request)
@@ -66,5 +58,21 @@ public function viewList(Request $request)
         ]);
 
         return redirect()->back()->with('success', 'Product added successfully!');
+    }
+
+    public function index(Request $request)
+    {
+        if ($request->ajax()) {
+            $data = DB::table('products')->get();
+            return Datatables::of($data)
+                ->addIndexColumn()
+                ->addColumn('action', function ($row) {
+                    $btn = '<a href="javascript:void(0)" class="edit btn btn-primary btn-sm">View</a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->make(true);
+        }
+        return view('product.test');
     }
 }

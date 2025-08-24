@@ -8,4 +8,6 @@ Route::get('/adminDashboard', [MyController::class, 'AdminDash'])->name('ADMdash
 Route::get('/CreateProject', [MyController::class, 'CreateProject'])->name('CreateProject');
 Route::get('/ViewList', [MyController::class, 'ViewList'])->name('ViewList');
 Route::post('/PostView', [MyController::class, 'submitProduct'])->name('postProduct');
-Route::get('/product-list', [MyController::class, 'viewList'])->name('product.list');
+
+
+Route::get('users', [MyController::class, 'index'])->name('users.index');
