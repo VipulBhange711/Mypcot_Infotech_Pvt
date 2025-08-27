@@ -11,3 +11,5 @@ Route::post('/PostView', [MyController::class, 'submitProduct'])->name('postProd
 
 
 Route::get('users', [MyController::class, 'index'])->name('users.index');
+Route::post('/products/update', [MyController::class, 'update'])->name('products.update');
+Route::delete('/products/{id}', [MyController::class, 'destroy'])->name('products.destroy');

@@ -75,4 +75,41 @@ class MyController extends Controller
         }
         return view('product.test');
     }
+
+    public function update(Request $request)
+    {
+       
+        $request->validate([
+            'id' => 'required|integer',
+            'product_name' => 'required|string|max:255',
+            'product_description' => 'nullable|string',
+            'category_name' => 'required|string|max:255',
+            'status' => 'required|boolean',
+        ]);
+
+        DB::table('products')
+            ->where('id', $request->id)
+            ->update([
+                'product_name' => $request->product_name,
+                'product_description' => $request->product_description,
+                'category_name' => $request->category_name,
+                'status' => $request->status,
+                'updated_at' => now(),
+            ]);
+
+        return response()->json([
+            'success' => true,
+            'message' => 'Product updated successfully!'
+        ]);
+    }
+    public function destroy($id)
+{
+
+    DB::table('products')->where('id', $id)->delete();
+
+    return response()->json([
+        'success' => true,
+        'message' => 'Product deleted successfully!'
+    ]);
+}
 }
