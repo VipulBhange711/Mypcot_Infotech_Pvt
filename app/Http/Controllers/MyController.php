@@ -63,7 +63,10 @@ class MyController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB::table('products')->get();
+       $data = DB::table('products')
+            ->orderBy('id', 'desc')
+            ->get();
+
             return Datatables::of($data)
                 ->addIndexColumn()
                 ->addColumn('action', function ($row) {

@@ -125,7 +125,7 @@
           orderable: false,
           searchable: false,
           render: function (data, type, row) {
-         
+
             let rowData = JSON.stringify(row).replace(/"/g, '&quot;');
             return `
         <button type="button" class="btn btn-sm btn-primary" 
@@ -144,64 +144,68 @@
     });
   });
 
-function editItem(product) {
+  function editItem(product) {
 
-  $('#edit_id').val(product.id);
-  $('#edit_product_name').val(product.product_name);
-  $('#edit_product_description').val(product.product_description);
-  $('#edit_category_name').val(product.category_name);
-  $('#edit_status').val(product.status);
-}
-let deleteId = null;
+    $('#edit_id').val(product.id);
+    $('#edit_product_name').val(product.product_name);
+    $('#edit_product_description').val(product.product_description);
+    $('#edit_category_name').val(product.category_name);
+    $('#edit_status').val(product.status);
+  }
+  let deleteId = null;
 
-function confirmDelete(product) {
-  deleteId = product.id; 
-  $('#deleteMessage').html(
-    `Are you sure you want to delete <strong>${product.product_name}</strong>?`
-  );
-}
+  function confirmDelete(product) {
+    deleteId = product.id;
+    $('#deleteMessage').html(
+      `Are you sure you want to delete <strong>${product.product_name}</strong>?`
+    );
+  }
 
-function saveChanges() {
-  let data = {
-    id: $('#edit_id').val(),
-    product_name: $('#edit_product_name').val(),
-    product_description: $('#edit_product_description').val(),
-    category_name: $('#edit_category_name').val(),
-    status: $('#edit_status').val(),
-    _token: "{{ csrf_token() }}" 
-  };
+  function saveChanges() {
+    let data = {
+      id: $('#edit_id').val(),
+      product_name: $('#edit_product_name').val(),
+      product_description: $('#edit_product_description').val(),
+      category_name: $('#edit_category_name').val(),
+      status: $('#edit_status').val(),
+      _token: "{{ csrf_token() }}"
+    };
 
-  $.ajax({
-    url: "{{ route('products.update') }}",
-    type: "POST",
-    data: data,
-    success: function(response) {
-      $('#modal-xl').modal('hide');
-      $('.data-table').DataTable().ajax.reload(); 
-    
-    },
-    error: function(xhr) {
- 
-    }
-  });
+    $.ajax({
+      url: "{{ route('products.update') }}",
+      type: "POST",
+      data: data,
+      success: function (response) {
+        $('#modal-xl').modal('hide');
+        $('.data-table').DataTable().ajax.reload();
+        toastr.success(response.message, 'Updated');
 
-}
+      },
+      error: function (xhr) {
+        toastr.error("Update failed!", 'Error');
+      }
+    });
 
-function deleteProduct() {
-  $.ajax({
-    url: "/products/" + deleteId,
-    type: "DELETE",
-    data: {
-      _token: "{{ csrf_token() }}" 
-    },
-    success: function(response) {
-      $('#modal-sm').modal('hide');
-      $('.data-table').DataTable().ajax.reload(); 
+  }
 
-    },
-    error: function(xhr) {
+  function deleteProduct() {
+    $.ajax({
+      url: "/products/" + deleteId,
+      type: "DELETE",
+      data: {
+        _token: "{{ csrf_token() }}"
+      },
+      success: function (response) {
+        $('#modal-sm').modal('hide');
+        $('.data-table').DataTable().ajax.reload();
+        $('#modal-xl').modal('hide');
 
-    }
-  });
-}
+        toastr.warning(response.message, 'Deleted');
+
+      },
+      error: function (xhr) {
+        toastr.error("Delete failed!", 'Error');
+      }
+    });
+  }
 </script>
